@@ -46,15 +46,15 @@ def on_message(mqtt_client, userdata, msg):
     print(msg.topic.lower())
     print(msg.payload.decode("utf-8"))
 
-    sys.stdout.flush()
-
-    requests.post('https://slack.com/api/chat.postMessage', {
+    rc = requests.post('https://slack.com/api/chat.postMessage', {
         'token': slack_token,
         'channel': slack_channel,
         'text': msg.payload.decode("utf-8"),
         'icon_emoji': slack_icon_emoji,
         'username': slack_user_name
     }).json()	
+    print(rc)
+    sys.stdout.flush()
 
 #    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
 #        if previous_value > 0:
