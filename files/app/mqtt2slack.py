@@ -39,6 +39,7 @@ def on_message(mqtt_client, userdata, msg):
     
     today = datetime.datetime.now()
     print(msg.topic.lower())
+    print(msg.payload.decode("utf-8"))
     sys.stdout.flush()
 #    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
 #        if previous_value > 0:
@@ -62,14 +63,13 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
     mqtt_client.loop_start()
 
     while True:
-        mqtt_client.subscribe("#")
-        mqtt_client.on_message=on_message
+        mqtt_client.subscribe("#slack")
+        mqtt_client.on_message = on_message
         mqtt_client.on_publish = on_publish
 
         time.sleep(10)
         today = datetime.datetime.now()
-        ret = mqtt_client.publish("house/bulb1", today.strftime("%d/%m/%Y %H:%M:%S"))
-        print(ret)
+        mqtt_client.publish("slack/msg", today.strftime("%d/%m/%Y %H:%M:%S"))
 
     mqtt_client.loop_stop()
 
