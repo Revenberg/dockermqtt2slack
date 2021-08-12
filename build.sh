@@ -2,7 +2,7 @@
 
 # version 2021-08-07 15:20
 
-cd ~/dockerwatermeter
+cd ~/dockermqtt2slack
 
 if [ -n "$1" ]; then
   ex=$1

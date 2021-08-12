@@ -1,12 +1,12 @@
-# dockerwatermeter
+# dockermqtt2slack
 
 sudo apt install gnupg2 pass
-docker image build -t dockerwatermeter  .
+docker image build -t dockermqtt2slack  .
 docker login -u revenberg
-docker image push revenberg/dockerwatermeter:latest
+docker image push revenberg/dockermqtt2slack:latest
 
-docker run revenberg/dockerwatermeter
+docker run revenberg/dockermqtt2slack
 
 docker exec -it ??? /bin/sh
 
-docker push revenberg/dockerwatermeter:
+docker push revenberg/dockermqtt2slack:
