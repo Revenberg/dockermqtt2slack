@@ -31,6 +31,10 @@ if __debug__:
     print(slack_user_name)
     sys.stdout.flush()
 
+def on_publish(client,userdata,result):             #create function for callback
+    print("data published \n")
+    pass
+
 def on_message(mqtt_client, userdata, msg):
     
     today = datetime.datetime.now()
@@ -50,10 +54,7 @@ def on_message(mqtt_client, userdata, msg):
 #        values['pulse_count'] = int(str(msg.payload.decode("utf-8")))
 #        values['datetime'] = today.strftime("%d/%m/%Y %H:%M:%S")
     
-def getData(mqttBroker, mqttPort, mqttKeepAlive):
-    global values
-    global previous_value
-    
+def getData(mqttBroker, mqttPort, mqttKeepAlive):   
     mqtt_client = mqtt.Client("reader")
 
     mqtt_client.connect(mqttBroker, mqttPort, mqttKeepAlive)
@@ -63,7 +64,11 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
     while True:
         mqtt_client.subscribe("#")
         mqtt_client.on_message=on_message
-    
+        mqtt_client.on_publish = on_publish
+        today = datetime.datetime.now()
+        ret = mqtt_client.publish("house/bulb1", today.strftime("%d/%m/%Y %H:%M:%S"))
+        print(ret)
+
     mqtt_client.loop_stop()
 
 getData(mqttBroker, mqttPort, mqttKeepAlive)
