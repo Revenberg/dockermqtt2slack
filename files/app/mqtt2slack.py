@@ -57,6 +57,17 @@ def on_message(mqtt_client, userdata, msg):
     }).json()	
     print(rc)
 
+    
+    rc = requests.post('https://slack.com/api/users.conversations', {
+        'token': slack_token,
+        'channel': slack_channel,
+        'text': msg.payload.decode("utf-8"),
+        'icon_emoji': slack_icon_emoji,
+        'username': slack_user_name
+    }).json()	
+    print(rc)
+
+
     rc = requests.post('https://slack.com/api/chat.postMessage', {
         'token': slack_token,
         'channel': slack_channel,
