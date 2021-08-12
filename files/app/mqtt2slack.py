@@ -65,6 +65,8 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
         mqtt_client.subscribe("#")
         mqtt_client.on_message=on_message
         mqtt_client.on_publish = on_publish
+
+        time.sleep(10)
         today = datetime.datetime.now()
         ret = mqtt_client.publish("house/bulb1", today.strftime("%d/%m/%Y %H:%M:%S"))
         print(ret)
