@@ -28,6 +28,7 @@ if __debug__:
     print(mqttPort)
     print(mqttKeepAlive)
     print(do_raw_log)
+    print(slack_token)
     print(slack_channel)
     print(slack_user_name)
     sys.stdout.flush()
@@ -45,6 +46,7 @@ def on_message(mqtt_client, userdata, msg):
     today = datetime.datetime.now()
     print(msg.topic.lower())
     print(msg.payload.decode("utf-8"))
+
 
     rc = requests.post('https://slack.com/api/chat.postMessage', {
         'token': slack_token,
