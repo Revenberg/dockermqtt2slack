@@ -78,7 +78,7 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
     mqtt_client.loop_start()
 
     while True:
-        mqtt_client.subscribe("#slack")
+        mqtt_client.subscribe("slack/#")
         mqtt_client.on_message = on_message
         mqtt_client.on_publish = on_publish
 
