@@ -21,14 +21,17 @@ slack_channel = int(config.get('slack', 'slack_channel'))
 slack_icon_emoji = config.get('slack', 'slack_icon_emoji')
 slack_user_name = config.get('slack', 'slack_user_name')
 
-values = dict()
-
-previous_value = 0
+if __debug__:
+    print("running with debug")
+    print(mqttBroker)
+    print(mqttPort)
+    print(mqttKeepAlive)
+    print(do_raw_log)
+    print(slack_channel)
+    print(slack_user_name)
 
 def on_message(mqtt_client, userdata, msg):
-    global values
-    global previous_value
-
+    
     today = datetime.datetime.now()
     print(msg.topic.lower())
 #    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
