@@ -30,11 +30,12 @@ if __debug__:
     print(slack_channel)
     print(slack_user_name)
     sys.stdout.flush()
-    
+
 def on_message(mqtt_client, userdata, msg):
     
     today = datetime.datetime.now()
     print(msg.topic.lower())
+    sys.stdout.flush()
 #    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
 #        if previous_value > 0:
 #            values['current_value'] = int(str(msg.payload.decode("utf-8")))
