@@ -17,7 +17,7 @@ mqttPort = int(config.get('mqtt', 'mqttPort'))
 mqttKeepAlive = int(config.get('mqtt', 'mqttKeepAlive'))
 
 slack_token = os.getenv('slack_token', '')
-slack_channel = int(config.get('slack', 'slack_channel'))
+slack_channel = config.get('slack', 'slack_channel')
 slack_icon_emoji = config.get('slack', 'slack_icon_emoji')
 slack_user_name = config.get('slack', 'slack_user_name')
 
