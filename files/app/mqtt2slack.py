@@ -12,9 +12,9 @@ config.read("config.ini")
 log_path = config.get('Logging', 'log_path', fallback='/var/log/mqtt2slack/')
 do_raw_log = config.getboolean('Logging', 'do_raw_log')
 
-mqttBroker = config.get('mqtt2slack', 'mqttBroker')
-mqttPort = int(config.get('mqtt2slack', 'mqttPort'))
-mqttKeepAlive = int(config.get('mqtt2slack', 'mqttKeepAlive'))
+mqttBroker = config.get('mqtt', 'mqttBroker')
+mqttPort = int(config.get('mqtt', 'mqttPort'))
+mqttKeepAlive = int(config.get('mqtt', 'mqttKeepAlive'))
 
 slack_token = os.getenv('slack_token', '')
 slack_channel = int(config.get('slack', 'slack_channel'))
