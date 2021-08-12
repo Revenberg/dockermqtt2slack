@@ -5,6 +5,7 @@ import sys
 import json
 import datetime
 import os
+import requests
 
 config = configparser.RawConfigParser(allow_no_value=True)
 config.read("config.ini")
@@ -36,11 +37,25 @@ def on_publish(client,userdata,result):             #create function for callbac
     pass
 
 def on_message(mqtt_client, userdata, msg):
+    global slack_token 
+    global slack_channel 
+    global slack_icon_emoji
+    global slack_user_name
     
     today = datetime.datetime.now()
     print(msg.topic.lower())
     print(msg.payload.decode("utf-8"))
+
     sys.stdout.flush()
+
+    requests.post('https://slack.com/api/chat.postMessage', {
+        'token': slack_token,
+        'channel': slack_channel,
+        'text': msg.payload.decode("utf-8"),
+        'icon_emoji': slack_icon_emoji,
+        'username': slack_user_name
+    }).json()	
+
 #    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
 #        if previous_value > 0:
 #            values['current_value'] = int(str(msg.payload.decode("utf-8")))
