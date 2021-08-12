@@ -29,7 +29,8 @@ if __debug__:
     print(do_raw_log)
     print(slack_channel)
     print(slack_user_name)
-
+    sys.stdout.flush()
+    
 def on_message(mqtt_client, userdata, msg):
     
     today = datetime.datetime.now()
