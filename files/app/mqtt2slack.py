@@ -70,9 +70,9 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
     print("============================= 2 =")
     sys.stdout.flush()
     mqtt_client = mqtt.Client("reader")
-
-    mqtt_client.connect(mqttBroker, mqttPort, mqttKeepAlive)
-
+    print("============================= 2a =")
+    sys.stdout.flush()
+    mqtt_client.connect(mqttBroker, mqttPort, mqttKeepAlive)    
 #    mqtt_client.loop_start()
     print("============================= 3 =")
     sys.stdout.flush()
