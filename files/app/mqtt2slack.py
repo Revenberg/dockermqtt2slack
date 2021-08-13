@@ -48,7 +48,7 @@ def send_slack(text):
     rc = requests.post(slack_webhook, 
         data=json.dumps(payload),
         headers=headers
-        ).json()	
+        )
         
 
     print("=========== on_message ================== 5 =")
