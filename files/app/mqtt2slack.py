@@ -32,14 +32,9 @@ def on_publish(client,userdata,result):             #create function for callbac
     print("data published \n")
     pass
 
-def on_message(mqtt_client, userdata, msg):
-    global slack_webhook 
-    print("=========== on_message ================== 2 =")
-    sys.stdout.flush()
+def send_slack(text):
+    global slack_webhook
     
-    today = datetime.datetime.now()
-    print(msg.topic.lower())
-    print(msg.payload.decode("utf-8"))
     print("=========== on_message ================== 3 =")
     sys.stdout.flush()
     headers = {
@@ -48,12 +43,23 @@ def on_message(mqtt_client, userdata, msg):
 
     print("=========== on_message ================== 4 =")
     rc = requests.post(slack_webhook, {
-        'data': '{"text":"' + msg.payload.decode("utf-8") + '"}'
+        'data': '{"text":"' + text + '"}'
     }).json()	
 
     print("=========== on_message ================== 5 =")
     print(rc)
     sys.stdout.flush()
+
+def on_message(mqtt_client, userdata, msg):
+    global slack_webhook 
+    print("=========== on_message ================== 2 =")
+    sys.stdout.flush()
+    
+    today = datetime.datetime.now()
+    print(msg.topic.lower())
+    print(msg.payload.decode("utf-8"))
+    sys.stdout.flush()
+    send_slack( msg.payload.decode("utf-8") )
 
 #    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
 #        if previous_value > 0:
@@ -95,4 +101,5 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
 
 print("============================= 1 =")
 sys.stdout.flush()
+send_slack( "starting" )
 getData(mqttBroker, mqttPort, mqttKeepAlive)
