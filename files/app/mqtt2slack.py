@@ -35,61 +35,26 @@ def on_publish(client,userdata,result):             #create function for callbac
 def send_slack(text):
     global slack_webhook
     
-    print("=========== on_message ================== 3 =")
-    print( text )
-    sys.stdout.flush()
     headers = {'content-type': 'application/json'}
     
     payload = { 
         'text': text  
     }
 
-    print("=========== on_message ================== 4 =")
     rc = requests.post(slack_webhook, 
         data=json.dumps(payload),
         headers=headers
         )
-        
-
-    print("=========== on_message ================== 5 =")
-    print(rc)
-    sys.stdout.flush()
 
 def on_message(mqtt_client, userdata, msg):
     global slack_webhook 
-    print("=========== on_message ================== 2 =")
-    sys.stdout.flush()
     
-    today = datetime.datetime.now()
-    print(msg.topic.lower())
-    print(msg.payload.decode("utf-8"))
-    sys.stdout.flush()
     send_slack( msg.payload.decode("utf-8") )
-
-#    if msg.topic.lower() == "mqtt2slack/reading/current_value" :        
-#        if previous_value > 0:
-#            values['current_value'] = int(str(msg.payload.decode("utf-8")))
-#            values['usages'] = int(str(msg.payload.decode("utf-8"))) - previous_value            
-#        else:
-#            values['current_value'] = int(str(msg.payload.decode("utf-8")))
-#            values['usages'] = 0
-#        previous_value = int(str(msg.payload.decode("utf-8")))
-#        values['datetime'] = today.strftime("%d/%m/%Y %H:%M:%S")    
-
-#    if msg.topic.lower() == "mqtt2slack/reading/pulse_count" :
-#        values['pulse_count'] = int(str(msg.payload.decode("utf-8")))
-#        values['datetime'] = today.strftime("%d/%m/%Y %H:%M:%S")
     
 def getData(mqttBroker, mqttPort, mqttKeepAlive):   
-    print("============================= 2 =")
-    sys.stdout.flush()
     mqtt_client = mqtt.Client("reader")
-    print("============================= 2a =")
-    sys.stdout.flush()
     mqtt_client.connect(mqttBroker, mqttPort, mqttKeepAlive)    
     mqtt_client.loop_start()
-    print("============================= 3 =")
-    sys.stdout.flush()
     mqtt_client.subscribe("slack/msg")
     
     while True:        
@@ -100,11 +65,8 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
         print(today)
         mqtt_client.publish("slack/msg", today.strftime("%d/%m/%Y %H:%M:%S"))
         sys.stdout.flush()
-        time.sleep(10)
+        time.sleep(300)
     
     mqtt_client.loop_stop()
 
-print("============================= 1 =")
-sys.stdout.flush()
-send_slack( "starting" )
 getData(mqttBroker, mqttPort, mqttKeepAlive)
