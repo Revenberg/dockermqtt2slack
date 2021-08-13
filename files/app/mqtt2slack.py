@@ -17,10 +17,7 @@ mqttBroker = config.get('mqtt', 'mqttBroker')
 mqttPort = int(config.get('mqtt', 'mqttPort'))
 mqttKeepAlive = int(config.get('mqtt', 'mqttKeepAlive'))
 
-slack_token = os.getenv('slack_token', '')
-slack_channel = config.get('slack', 'slack_channel')
-slack_icon_emoji = config.get('slack', 'slack_icon_emoji')
-slack_user_name = config.get('slack', 'slack_user_name')
+slack_webhook = os.getenv('webhook', '')
 
 if __debug__:
     print("running with debug")
@@ -28,9 +25,7 @@ if __debug__:
     print(mqttPort)
     print(mqttKeepAlive)
     print(do_raw_log)
-    print(slack_token)
-    print(slack_channel)
-    print(slack_user_name)
+    print(slack_webhook)
     sys.stdout.flush()
 
 def on_publish(client,userdata,result):             #create function for callback
@@ -38,34 +33,20 @@ def on_publish(client,userdata,result):             #create function for callbac
     pass
 
 def on_message(mqtt_client, userdata, msg):
-    global slack_token 
-    global slack_channel 
-    global slack_icon_emoji
-    global slack_user_name
-    
+    global slack_webhook 
+   
     today = datetime.datetime.now()
     print(msg.topic.lower())
     print(msg.payload.decode("utf-8"))
-
-
     
-    rc = requests.post('https://slack.com/api/users.conversations', {
-        'token': slack_token,
-        'channel': slack_channel,
-        'text': msg.payload.decode("utf-8"),
-        'icon_emoji': slack_icon_emoji,
-        'username': slack_user_name
-    }).json()	
-    print(rc)
+    headers = {
+        "Content-type": "application/json"
+    }
 
-
-    rc = requests.post('https://slack.com/api/chat.postMessage', {
-        'token': slack_token,
-        'channel': slack_channel,
-        'text': msg.payload.decode("utf-8"),
-        'icon_emoji': slack_icon_emoji,
-        'username': slack_user_name
+    rc = requests.post(slack_webhook, {
+        'data': '{"text":"' + msg.payload.decode("utf-8") + '"}'
     }).json()	
+
     print(rc)
     sys.stdout.flush()
 
