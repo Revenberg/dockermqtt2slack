@@ -40,15 +40,18 @@ def on_message(mqtt_client, userdata, msg):
     today = datetime.datetime.now()
     print(msg.topic.lower())
     print(msg.payload.decode("utf-8"))
-    
+    print("=========== on_message ================== 3 =")
+    sys.stdout.flush()
     headers = {
         "Content-type": "application/json"
     }
 
+    print("=========== on_message ================== 4 =")
     rc = requests.post(slack_webhook, {
         'data': '{"text":"' + msg.payload.decode("utf-8") + '"}'
     }).json()	
 
+    print("=========== on_message ================== 5 =")
     print(rc)
     sys.stdout.flush()
 
