@@ -33,9 +33,10 @@ def on_publish(client,userdata,result):             #create function for callbac
     pass
 
 def on_message(mqtt_client, userdata, msg):
-    print("=========== on_message ================== 2 =")
     global slack_webhook 
-   
+    print("=========== on_message ================== 2 =")
+    sys.stdout.flush()
+    
     today = datetime.datetime.now()
     print(msg.topic.lower())
     print(msg.payload.decode("utf-8"))
@@ -67,12 +68,14 @@ def on_message(mqtt_client, userdata, msg):
     
 def getData(mqttBroker, mqttPort, mqttKeepAlive):   
     print("============================= 2 =")
+    sys.stdout.flush()
     mqtt_client = mqtt.Client("reader")
 
     mqtt_client.connect(mqttBroker, mqttPort, mqttKeepAlive)
 
     mqtt_client.loop_start()
     print("============================= 3 =")
+    sys.stdout.flush()
     while True:
         mqtt_client.subscribe("slack/#")
         mqtt_client.on_message = on_message
@@ -81,9 +84,11 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
         time.sleep(10)
         today = datetime.datetime.now()
         print(today)
+        sys.stdout.flush()
         mqtt_client.publish("slack/msg", today.strftime("%d/%m/%Y %H:%M:%S"))
 
     mqtt_client.loop_stop()
 
 print("============================= 1 =")
+sys.stdout.flush()
 getData(mqttBroker, mqttPort, mqttKeepAlive)
