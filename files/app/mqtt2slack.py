@@ -38,15 +38,18 @@ def send_slack(text):
     print("=========== on_message ================== 3 =")
     print( text )
     sys.stdout.flush()
-    headers = {
+    headers = { 
         "Content-type": "application/json"
     }
-    data = '{ "text": ' + text  + '}'
+    
+    payload = { 
+        "text": text  
+    }
 
     print("=========== on_message ================== 4 =")
-    rc = requests.post(slack_webhook, {
-        'text': text
-    }).json()	
+    rc = requests.post(slack_webhook, 
+        data=json.dumps(payload),
+     headers=json.dumps(headers)).json()	
 
     print("=========== on_message ================== 5 =")
     print(rc)
