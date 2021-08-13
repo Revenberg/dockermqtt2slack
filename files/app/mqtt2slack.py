@@ -87,7 +87,7 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
         mqtt_client.publish("slack/msg", today.strftime("%d/%m/%Y %H:%M:%S"))
         sys.stdout.flush()
     
-#    mqtt_client.loop_stop()
+    mqtt_client.loop_stop()
 
 print("============================= 1 =")
 sys.stdout.flush()
