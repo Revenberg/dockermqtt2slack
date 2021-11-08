@@ -70,3 +70,4 @@ def getData(mqttBroker, mqttPort, mqttKeepAlive):
     mqtt_client.loop_stop()
 
 getData(mqttBroker, mqttPort, mqttKeepAlive)
+
