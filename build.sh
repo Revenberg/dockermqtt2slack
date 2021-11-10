@@ -19,9 +19,9 @@ if [ $ex == true ]; then
     git pull
     chmod +x build.sh
 
-    docker image build -t revenberg/mqtt2slack .
+    docker image build -t revenberg/mqtt2slack:latest .
 
-    docker push revenberg/mqtt2slack
+    docker push revenberg/mqtt2slack:latest
 
     # testing: 
 
